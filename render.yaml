@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: haunted-escape-api
+    runtime: node
+    plan: starter
+    rootDir: backend
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/health
+    disk:
+      name: haunted-escape-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DB_PATH
+        value: /var/data/haunted-escape.sqlite
+      - key: ALLOWED_ORIGINS
+        sync: false
